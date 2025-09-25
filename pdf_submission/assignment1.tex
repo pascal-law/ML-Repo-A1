@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{fancybox}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newcommand{\Value}{\mathord{\it value}}
+
+\newcommand{\fib}{\textsf{\sc Fib}}
+\newcommand{\FB}{\textsf{\sc FibBieber}}
+\newcommand{\Bieb}{\textsf{\sc Bieber}}
+\newcommand{\FS}{\textsf{\sc FibSwift}}
+\newcommand{\Swift}{\textsf{\sc Swift}}
+
+%%%%%%%%%%%%%% Capsule %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\capsule}[2]{\vspace{0.5em}
+  \shadowbox{%
+    \begin{minipage}{.90\linewidth}%
+      \textbf{#1:}~#2%
+    \end{minipage}}
+  \vspace{0.5em} }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{ques}
+\newenvironment{question}{\stepcounter{ques}{\noindent\bf Question \arabic{ques}:}}{\vspace{5mm}}
+
+\begin{document} 
+
+\begin{center} \Large\bf
+COMP 3105 --- Fall 2025 --- Assignment 1
+\end{center} 
+
+\begin{center}
+Pascal Law 101318299
+\end{center}
+
+\begin{question}
+Subquestion b.
+
+1. 
+
+\[
+\underset{1\times(d+1)}{\mathbf{c}^T}
+\;\;
+\underset{(d+1)\times 1}{\mathbf{u}}
+\;=\; \delta
+\]
+
+Since $\mathbf{u} =
+\begin{bmatrix}
+\mathbf{w} \\
+\delta
+\end{bmatrix}
+$, we can make all the weights in $\mathbf{w}$ zero, and just have $\delta$ in the last entry of $\mathbf{u}$.
+
+As such, we can set:
+\[
+\mathbf{c} =
+\underset{(d+1)\times 1}{
+\begin{bmatrix}
+0 & 0 & 0 & \cdots & 0 & 1
+\end{bmatrix}}^{T}
+\]
+
+\quad
+
+2. 
+
+Change the first part of inequality of $L_{\infty}$ to:
+
+\[-\delta \le 0\]
+
+We can break $G^1 \mathbf{u} \le 0$ into two parts:
+
+\quad
+
+
+\quad
+
+
+\end{question}
+
+\end{document} 
