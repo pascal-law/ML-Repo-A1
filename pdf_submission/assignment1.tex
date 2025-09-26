@@ -38,9 +38,8 @@ Pascal Law 101318299
 \end{center}
 
 \begin{question}
-Subquestion b.
 
-1. 
+Subquestion b1.
 
 \[
 \underset{1\times(d+1)}{\mathbf{c}^T}
@@ -67,7 +66,7 @@ As such, we can set:
 
 \quad
 
-2. 
+Subquestion b2. 
 
 Change the first part of inequality of $L_{\infty}$ to:
 
@@ -81,6 +80,77 @@ We can break $G^1 \mathbf{u} \le 0$ into two parts:
 
 \quad
 
+Subquestion c2.
+
+\begin{center}
+Table 1: Different training losses for different models
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cc}
+    \textbf{Model} & $L_2$ loss & $L_\infty$ loss \\
+    \hline
+    $L_2$ model   &      0.09557022      &         1.58819212        \\
+    $L_\infty$ model &      0.23302085      &           0.86917599      
+\end{tabular}
+\end{table}
+
+\begin{center}
+Table 2: Different test losses for different models
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cc}
+    \textbf{Model} & $L_2$ loss & $L_\infty$ loss \\
+    \hline
+    $L_2$ model   &      0.05291075      &        1.03171424         \\
+    $L_\infty$ model &      0.29564879      &         2.1535331        
+\end{tabular}
+\end{table}
+
+Analysis of result:
+
+When we compare our training data with our test data, we find that our $L_2$ loss has a smaller difference when compared to our $L_{\infty}$ loss, and similarly our $L_2$ model also has a smaller difference when compared to our $L_{\infty}$ model.
+
+This means that our $L_2$ model using $L_2$ loss has the smallest difference and so is the most accurate prediction of the data. On the other hand, the $L_{\infty}$ model has the biggest difference which means that $L_{\infty}$ model using $L_{\infty}$ loss is the most inaccurate prediction of the data.
+
+The reason that the $L_{\infty}$ loss is so inaccurate is because of the difference of size between the test data and the training data. We only generate 30 samples for the training while we generate 1000 samples for the test data. This means that our $L_{\infty}$ loss is modelled on a very limited set of training data, and so it is heavily affected by outliers in our much larger test data.
+
+This is in contrast with our $L_2$ loss, which is not as affected by outliers, which makes it much more accurate when the training data sample is small.
+
+When considering the models, the $L_2$ model is more accurate because it has a smaller tolerance, which means it doesn't chase outliers like our $L_{\infty}$ model.
+
+These factors lead to the conclusion that our $L_2$ loss and $L_2$ model are more accurate than the $L_{\infty}$ counterparts for this set of training and test data.
+
+\quad
+
+Subquestion d2.
+
+\begin{center}
+Table 1: Different training losses for different models
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cc}
+    \textbf{Model} & $L_2$ loss & $L_\infty$ loss \\
+    \hline
+    $L_2$ model   &      53.18368801      &         32.21643524        \\
+    $L_\infty$ model &      66.09571725      &           26.39169568      
+\end{tabular}
+\end{table}
+
+\begin{center}
+Table 2: Different test losses for different models
+\end{center}
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cc}
+    \textbf{Model} & $L_2$ loss & $L_\infty$ loss \\
+    \hline
+    $L_2$ model   &      55.20252554      &        33.40449987         \\
+    $L_\infty$ model &      68.04960819      &         36.9655386        
+\end{tabular}
+\end{table}
 
 \end{question}
 

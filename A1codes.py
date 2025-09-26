@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 from cvxopt import matrix, solvers
@@ -140,58 +141,69 @@ def synRegExperiments():
 
 	return accumulator_train_loss / n_runs, accumulator_test_loss / n_runs
 
-print(synRegExperiments())
+# print(synRegExperiments())
 
-def synRegExperiments():
+def preprocessCCS(dataset_folder):
+	path = os.path.join(dataset_folder, "Concrete_Data.xls")
 
-	def genData(n_points, is_training=False):
-		'''
-		This function generate synthetic data
-		'''
-		X = np.random.randn(n_points, d) # input matrix
-		X = np.concatenate((np.ones((n_points, 1)), X), axis=1) # augment input
-		y = X @ w_true + np.random.randn(n_points, 1) * noise # ground truth label
-		if is_training:
-			y[0] *= -0.1
-		return X, y
+	print(path)
 
-		# # following is debug code for sample data
-		# if is_training:
-		# 	path = "./toy_data/regression_train.csv"
-		# else:
-		# 	path = "./toy_data/regression_test.csv"
-
-		# df = pd.read_csv(path)
-		# X = df["x"].values.reshape(-1, 1)
-		# X = np.concatenate((np.ones((n_points, 1)), X), axis=1) # augment input
-		# y = df["y"].values.reshape(-1, 1)
-
-		# return X, y
+	df = pd.read_excel(path)
 	
-	# if using actual data, change the n_train, n_test and d values
+
+	# cutting off the last column in df
+	n = len(df)
+	X = df.iloc[:, 0: -1].values.reshape(n, -1)
+	y = df.iloc[:, -1].values.reshape(-1, 1)
+
+	return X, y
+
+# preprocessCCS(os.path.abspath("./toy_data"))
+
+def runCCS(dataset_folder):
+	# # test data
+	X, y = preprocessCCS(dataset_folder)
+	n, d = X.shape
+	X = np.concatenate((np.ones((n, 1)), X), axis=1) # augment
 	n_runs = 100
-	n_train = 30
-	n_test = 1000
-	d = 5
-	noise = 0.2
+	n_train = n_test = int(n / 2)
+
 	train_loss = np.zeros([n_runs, 2, 2]) # n_runs * n_models * n_metrics
 	test_loss = np.zeros([n_runs, 2, 2]) # n_runs * n_models * n_metrics
-	
 	# TODO: Change the following random seed to one of your student IDs
-	np.random.seed(101307254)
+	np.random.seed(101318299)
+	gen = np.random.default_rng(101318299)
+
+	# concatenate X, y together first
+	concatenated_X_y = np.concatenate((X, y), axis=1)
 
 	for r in range(n_runs):
+		# TODO: Randomly partition the dataset into two parts (50%
+		# training and 50% test)
+		
+		# # the following comments don't work because the X, y rows don't line up together
+		# X_randomized = X
+		# y_randomized = y
+		# gen.shuffle(X_randomized)
+		# gen.shuffle(y_randomized)
+		# print(X_randomized)
+		# print(y_randomized)
 
-		w_true = np.random.randn(d + 1, 1)
-		Xtrain, ytrain = genData(n_train, is_training=True)
-		Xtest, ytest = genData(n_test, is_training=False)
+		X_y_randomized = concatenated_X_y
+		gen.shuffle(X_y_randomized)
+		X_y_train = X_y_randomized[:int(n / 2)]
+		Xtrain = X_y_train[:,:-1]
+		ytrain = X_y_train[:,-1].reshape(-1, 1) # after slicing with one single column left we have to reshape
 
+		X_y_test = X_y_randomized[int(n / 2):]
+		Xtest = X_y_test[:, :-1]
+		ytest = X_y_test[:,-1].reshape(-1, 1) # after slicing with one single column left we have to reshape
+
+
+		# TODO: Learn two different models from the training data
+		# using L2 and L infinity losses
 		w_L2 = minimizeL2(Xtrain, ytrain)
 		w_Linf = minimizeLinf(Xtrain, ytrain)
-
-		# # testing w_L2 and w_Linf
-		# print(w_L2)
-		# print(w_Linf)
 
 		# TODO: Evaluate the two models' performance (for each model,
 		# calculate the L2 and L infinity losses on the training
@@ -224,16 +236,7 @@ def synRegExperiments():
 		accumulator_train_loss += train_loss[r]
 		accumulator_test_loss += test_loss[r]
 
-	# print(train_loss)
-	# print("---")
-	# print(test_loss)
-
 	# TODO: return a 2-by-2 training loss variable and a 2-by-2 test loss variable
-
-	# # testing 
-	# print(accumulator_train_loss / n_runs)
-	# print(accumulator_test_loss / n_runs)
-
 	return accumulator_train_loss / n_runs, accumulator_test_loss / n_runs
 
-print(synRegExperiments())
+print(runCCS(os.path.abspath("./toy_data")))
