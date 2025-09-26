@@ -1,8 +1,8 @@
-PWD c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1
+PWD c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/pdf_submission
 INPUT c:/texlive/2023/texmf.cnf
 INPUT c:/texlive/2023/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/assignment1.tex
+INPUT c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/pdf_submission/assignment1.tex
 OUTPUT assignment1.log
 INPUT c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2023/texmf-dist/tex/latex/base/article.cls

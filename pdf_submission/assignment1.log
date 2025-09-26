@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.16)  25 SEP 2025 13:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.16)  26 SEP 2025 10:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/assignment1.tex
-(c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/assignment1.tex
+**c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/pdf_submission/assignment1.tex
+(c:/Users/Pascal/Downloads/CarletonUniversity/Courses/COMP3105/Assignments/Assignment01/ML-Repo-A1/pdf_submission/assignment1.tex
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
 (c:/texlive/2023/texmf-dist/tex/latex/base/article.cls
@@ -311,12 +311,12 @@ Package rerunfilecheck Info: File `assignment1.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  9788 strings out of 474933
- 147306 string characters out of 5763787
+ 147351 string characters out of 5763787
  1924801 words of memory out of 5000000
  31219 multiletter control sequences out of 15000+600000
  564248 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,335b,432s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,350b,432s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
 Output written on assignment1.pdf (1 page, 80899 bytes).
 PDF statistics:
