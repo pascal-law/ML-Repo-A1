@@ -373,4 +373,73 @@ def synClsExperiments():
 	# TODO: return a 4-by-3 training accuracy variable and a 4-by-3 test accuracy variable
 	return accumulator_train_acc / n_runs, accumulator_test_acc / n_runs
 
-print(synClsExperiments())
+# print(synClsExperiments())
+
+def preprocessBCW(dataset_folder):
+	path = os.path.join(dataset_folder, "wdbc.data")
+	df = pd.read_csv(path, header=None, sep=',') # it's a comma-separated semi-csv file so we could just read it using pandas
+	n = len(df)
+	
+	y = df.iloc[:, 1].values.reshape(-1, 1) # get index 1 column as y
+	y = (y == "M").astype(int) # converting M, B -> 1, 0
+	X = df.iloc[:, 2:].values.reshape(n, -1) # get index 2-31 columns as X
+
+	return X, y
+
+# preprocessBCW(os.path.abspath("./toy_data"))
+
+def runBCW(dataset_folder):
+
+	X, y = preprocessBCW(dataset_folder)
+	n, d = X.shape
+	X = np.concatenate((np.ones((n, 1)), X), axis=1) # augment
+
+	n_runs = 100
+	train_acc = np.zeros([n_runs])
+	test_acc = np.zeros([n_runs])
+
+	# TODO: Change the following random seed to one of your student IDs
+	np.random.seed(101307254)
+	gen = np.random.default_rng(101307254)
+
+	concatenated_X_y = np.concatenate((X, y), axis=1)
+
+	for r in range(n_runs):
+		# TODO: Randomly partition the dataset into two parts (50%
+		# training and 50% test)
+
+		X_y_randomized = concatenated_X_y # each run, randomize based on the original data
+		gen.shuffle(X_y_randomized)
+
+		X_y_train = X_y_randomized[:int(n / 2)]
+		Xtrain = X_y_train[:,:-1]
+		ytrain = X_y_train[:,-1].reshape(-1, 1) # after slicing with one single column left we have to reshape
+
+		X_y_test = X_y_randomized[int(n / 2):]
+		Xtest = X_y_test[:,:-1]
+		ytest = X_y_test[:,-1].reshape(-1, 1) # after slicing with one single column left we have to reshape
+
+		w = find_opt(logisticRegObj, logisticRegGrad, Xtrain, ytrain)
+
+		# TODO: Evaluate the model's accuracy on the training
+		# data. Save it to `train_acc`
+		ztrain_hat = Xtrain @ w # let this linear prediction boundary = 0
+		ytrain_hat = (ztrain_hat >= 0).astype(int) # LogReg Slides page 5/18
+		train_acc[r] = 1 - np.average(np.abs(ytrain_hat - ytrain))
+
+		# TODO: Evaluate the model's accuracy on the test
+		# data. Save it to `test_acc`
+		ztest_hat = Xtest @ w # let this linear prediction boundary = 0
+		ytest_hat = (ztest_hat >= 0).astype(int) # LogReg Slides page 5/18
+		test_acc[r] = 1 - np.average(np.abs(ytest_hat - ytest))
+
+	# TODO: compute the average accuracies over runs
+	# TODO: return two variables: the average training accuracy and average test accuracy
+
+	print(train_acc)
+
+	print(test_acc)
+
+	return np.mean(train_acc), np.mean(test_acc)
+
+print(runBCW("./toy_data"))

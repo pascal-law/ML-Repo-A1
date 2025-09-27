@@ -192,6 +192,12 @@ Table 6: Testing accuracies with different hyper-parameters
 
 Subquestion c2.
 
+Our m represents the number of data points in the training data sample. As our m increases, our training accuracy decreases, but our test accuracy increases. This is because when m is low, we have very few data points to train our optimal parameter which causes us to create a line that is unsuitable for a large number of data points, like the amount we have in the test data. On the other hand, as our m increases, we have a much larger sample to train our optimal parameter on, which helps to create a line that is more suitable for our test data points. However, this may not necessarily be completely accurate for the set of training data points due to the higher amount of randomly distributed points that may skew the model.
+
+Both for training and test data, as dim1 increases our accuracy becomes almost perfect. This is because dim1 is an expression of the number of useful dimensions; when we have a higher dim1 in training, our info on the data is also higher which allows us to predict labels with a higher degree of accuracy. Similarly, when our test data has a higher dim1, our accuracy is again higher because of more useful information on the data points.
+
+However, as our dim2 increases, it has opposite effects in training and test data; in training data, it marginally increases the accuracy whereas in test data, the accuracy drops slowly but steadily. This is because dim2 is an expression of the number of noise dimensions which add to the variance. When we train using a larger dim2, it doesn't really increase our accuracy by much, however when we use test data with larger dim2, the increase in variance negatively affects our accuracy.
+
 
 
 \end{question}
