@@ -34,12 +34,18 @@ COMP 3105 --- Fall 2025 --- Assignment 1
 \end{center} 
 
 \begin{center}
-Pascal Law 101318299
+Pascal Law 101318299 $\vert$ Ayaan Aleem 101307254
 \end{center}
 
 \begin{question}
 
+\qquad
+
+\qquad
+
 Subquestion b1.
+
+\quad
 
 \[
 \underset{1\times(d+1)}{\mathbf{c}^T}
@@ -60,7 +66,7 @@ As such, we can set:
 \mathbf{c} =
 \underset{(d+1)\times 1}{
 \begin{bmatrix}
-0 & 0 & 0 & \cdots & 0 & 1
+\textbf{0}_{1 \times d} & 1
 \end{bmatrix}}^{T}
 \]
 
@@ -68,19 +74,203 @@ As such, we can set:
 
 Subquestion b2. 
 
-Change the first part of inequality of $L_{\infty}$ to:
+\quad
 
+We can break
+\[
+\underset{1\times (d+1)}{
+G^{1}
+}
+\begin{bmatrix}
+\textbf{w} \\
+\delta
+\end{bmatrix}
+\le
+\underset{1\times 1}{\textbf{h}^{1}}
+\]
+into two parts, and it becomes:
+
+\[
+\underset{1\times d}{G^{11}}
+\underset{1\times 1}{G^{12}}
+\begin{bmatrix}
+\textbf{w} \\
+\delta
+\end{bmatrix}
+\le
+\underset{1\times 1}{\textbf{h}^{1}}
+\]
+
+As such,
+\[
+\underset{1\times d}{G^{11}}
+\underset{d\times 1}{\textbf{w}}
++
+\underset{1\times 1}{G^{12}}
+\delta
+\le
+\underset{1\times 1}{\textbf{h}^{1}}
+\]
+
+Thus, given that the first part of the linear programming problem is:
 \[-\delta \le 0\]
-
-We can break $G^1 \mathbf{u} \le 0$ into two parts:
+we can let: \[
+\underset{1\times d}{G^{11}}
+= \textbf{0}_{1 \times d}
+\]
+\[
+\underset{1\times 1}{G^{12}}
+= -1
+\]
+\[
+\underset{1\times (d+1)}{
+G^{1}
+}
+=
+\underset{1\times (d+1)}{
+\begin{bmatrix}
+\textbf{0}_{1 \times d} & -1
+\end{bmatrix}}
+\]
+\[
+\underset{1\times 1}{\textbf{h}^{1}}
+= 0\]
 
 \quad
 
-
+Subquestion b3. 
 
 \quad
 
-Subquestion c2.
+We can break
+\[
+\underset{n\times (d+1)}{
+G^{2}
+}
+\begin{bmatrix}
+\textbf{w} \\
+\delta
+\end{bmatrix}
+\le
+\underset{n\times 1}{\textbf{h}^{2}}
+\]
+into two parts, and it becomes:
+
+\[
+\underset{n\times d}{G^{21}}
+\underset{n\times 1}{G^{22}}
+\begin{bmatrix}
+\textbf{w} \\
+\delta
+\end{bmatrix}
+\le
+\underset{n\times 1}{\textbf{h}^{2}}
+\]
+
+As such,
+\[
+\underset{n\times d}{G^{21}}
+\underset{d\times 1}{\textbf{w}}
++
+\underset{n\times 1}{G^{22}}
+\delta
+\le
+\underset{n\times 1}{\textbf{h}^{2}}
+\]
+
+Thus, given that the second part of the linear programming problem is:
+\[X \textbf{w} - \delta \cdot \textbf{1}_n \le \textbf{y}\]
+we can let: \[
+\underset{n\times d}{G^{21}}
+= X
+\]
+\[
+\underset{n\times 1}{G^{22}}
+= -\textbf{1}_{n \times 1}
+\]
+\[
+\underset{n\times (d+1)}{
+G^{2}
+}
+=
+\underset{n\times (d+1)}{
+\begin{bmatrix}
+X & -\textbf{1}_{n \times 1}
+\end{bmatrix}}
+\]
+\[
+\underset{n\times 1}{\textbf{h}^{2}}
+= \textbf{y}\]
+
+\quad
+
+Subquestion b4. 
+
+\quad
+
+We can break
+\[
+\underset{n\times (d+1)}{
+G^{3}
+}
+\begin{bmatrix}
+\textbf{w} \\
+\delta
+\end{bmatrix}
+\le
+\underset{n\times 1}{\textbf{h}^{3}}
+\]
+into two parts, and it becomes:
+
+\[
+\underset{n\times d}{G^{31}}
+\underset{n\times 1}{G^{32}}
+\begin{bmatrix}
+\textbf{w} \\
+\delta
+\end{bmatrix}
+\le
+\underset{n\times 1}{\textbf{h}^{3}}
+\]
+
+As such,
+\[
+\underset{n\times d}{G^{31}}
+\underset{d\times 1}{\textbf{w}}
++
+\underset{n\times 1}{G^{32}}
+\delta
+\le
+\underset{n\times 1}{\textbf{h}^{3}}
+\]
+
+Thus, given that the third part of the linear programming problem is:
+\[-X \textbf{w} - \delta \cdot \textbf{1}_n \le -\textbf{y}\]
+we can let: \[
+\underset{n\times d}{G^{31}}
+= -X
+\]
+\[
+\underset{n\times 1}{G^{32}}
+= -\textbf{1}_{n \times 1}
+\]
+\[
+\underset{n\times (d+1)}{
+G^{3}
+}
+=
+\underset{n\times (d+1)}{
+\begin{bmatrix}
+-X & -\textbf{1}_{n \times 1}
+\end{bmatrix}}
+\]
+\[
+\underset{n\times 1}{\textbf{h}^{3}}
+= -\textbf{y}\]
+
+\quad
+
+Subquestion c1.
 
 \begin{center}
 Table 1: Different training losses for different models
@@ -108,6 +298,10 @@ Table 2: Different test losses for different models
 \end{tabular}
 \end{table}
 
+\quad
+
+Subquestion c2.
+
 Analysis of result:
 
 When we compare our training data with our test data, we find that our $L_2$ loss has a smaller difference when compared to our $L_{\infty}$ loss, and similarly our $L_2$ model also has a smaller difference when compared to our $L_{\infty}$ model.
@@ -124,10 +318,14 @@ These factors lead to the conclusion that our $L_2$ loss and $L_2$ model are mor
 
 \quad
 
+\quad
+
+\quad
+
 Subquestion d2.
 
 \begin{center}
-Table 1: Different training losses for different models
+Table 3: Different training losses for different models
 \end{center}
 \begin{table}[h]
 \centering
@@ -140,7 +338,7 @@ Table 1: Different training losses for different models
 \end{table}
 
 \begin{center}
-Table 2: Different test losses for different models
+Table 4: Different test losses for different models
 \end{center}
 \begin{table}[h]
 \centering
@@ -201,5 +399,7 @@ However, as our dim2 increases, it has opposite effects in training and test dat
 
 
 \end{question}
+
+
 
 \end{document} 

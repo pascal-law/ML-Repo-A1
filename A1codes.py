@@ -441,10 +441,9 @@ def preprocessBCW(dataset_folder):
 	df = pd.read_csv(path, header=None, sep=',') # it's a semi-csv file so we could just read it using pandas
 	n = len(df)
 	
-	y = df.iloc[:, 1].values.reshape(-1, 1) # get index 1 column as y
+	y = df.iloc[:, 1].values.reshape(n, -1) # get index 1 column as y
 	y = (y == "M").astype(int) # converting M, B -> 1, 0
-	X = df.iloc[:, 2:].values.reshape(n, -1) # get index 2-31 columns as X
-
+	X = df.iloc[:, 2:].values.reshape(n, -1) # get index 2-11 columns as X
 	return X, y
 
 # preprocessBCW(os.path.abspath("./toy_data"))
@@ -504,10 +503,6 @@ def runBCW(dataset_folder):
 	# TODO: compute the average accuracies over runs
 	# TODO: return two variables: the average training accuracy and average test accuracy
 
-	print(train_acc)
-
-	print(test_acc)
-
 	return np.mean(train_acc), np.mean(test_acc)
 
-#print(runBCW("./toy_data"))
+# print(runBCW("./toy_data"))
