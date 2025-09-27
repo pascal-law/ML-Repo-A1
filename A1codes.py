@@ -1,7 +1,10 @@
 import os
+from autograd import grad
 import numpy as np
 import pandas as pd
 from cvxopt import matrix, solvers
+import scipy.optimize
+import scipy.special
 
 def minimizeL2(X, y):
 	return np.linalg.solve(X.T @ X, X.T @ y)
@@ -239,4 +242,71 @@ def runCCS(dataset_folder):
 	# TODO: return a 2-by-2 training loss variable and a 2-by-2 test loss variable
 	return accumulator_train_loss / n_runs, accumulator_test_loss / n_runs
 
-print(runCCS(os.path.abspath("./toy_data")))
+# print(runCCS(os.path.abspath("./toy_data")))
+
+# Q2
+
+def linearRegL2Obj(w, X, y):
+	n, d = np.shape(X)
+	obj_val = 1 / (2 * n) * np.linalg.norm(X @ w - y, 2)**2
+	return obj_val
+
+def linearRegL2Grad(w, X, y):
+	n, d = np.shape(X)
+	gradient = 1 / n * X.T @ (X @ w - y)
+	return gradient
+
+def find_opt(obj_func, grad_func, X, y):
+	d = X.shape[1]
+	# TODO: Initialize a random 1-D array of parameters of size d
+	w_0 = np.random.randn(d)
+
+	# TODO: Define an objective function `func` that takes a single argument (w)
+	def func(w):
+		return obj_func(w[:, None], X, y)
+		
+	# TODO: Define a gradient function `gd` that takes a single argument (w)
+	def gd(w):
+		return grad_func(w[:, None], X, y)
+	
+	print(np.shape(w_0))
+	return scipy.optimize.minimize(func, w_0, jac=gd)['x'][:, None]
+
+"""
+n_points = 5
+d = 100
+noise = 0.2
+w_true = np.random.randn(d + 1, 1)
+
+X = np.random.randn(n_points, d) # input matrix
+X = np.concatenate((np.ones((n_points, 1)), X), axis=1) # augment input
+y = X @ w_true + np.random.randn(n_points, 1) * noise # ground truth label
+
+
+import autograd.numpy as autogradnp  # Thinly-wrapped numpy
+
+def tanh(x):                 # Define a function
+	return (1.0 - autogradnp.exp((-2 * x))) / (1.0 + autogradnp.exp(-(2 * x)))
+
+grad_obj = grad(linearRegL2Obj)       # Obtain its gradient function
+              # Evaluate the gradient at x = 1.0
+print(grad_obj(w_true, X, y))
+print((linearRegL2Obj(w_true + 0.00001, X, y) - linearRegL2Obj(w_true, X, y)) / 0.00001)  # Compare to finite differences
+"""
+
+# w = find_opt(linearRegL2Obj, linearRegL2Grad, X, y)
+
+# print(w)
+
+def logisticRegObj(w, X, y):
+	n, d = np.shape(X)
+	obj_val = 1 / n * (-y.T @ np.log(scipy.special.expit(X @ w)) - (np.ones((n, 1)) - y).T @ np.log(np.ones((n, 1)) - scipy.special.expit(X @ w)))
+	print(obj_val)
+	return obj_val
+
+def logisticRegGrad(w, X, y):
+	n, d = np.shape(X)
+	gradient = 1 / n * X.T @ (scipy.special.expit(X @ w) - y)
+	return gradient
+
+
