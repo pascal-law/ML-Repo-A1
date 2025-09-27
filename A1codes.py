@@ -23,14 +23,11 @@ def minimizeLinf(X, y):
 	g31 = -X
 	g32 = -np.ones((n, 1))
 
-	G = np.concatenate(
-		(
+	G = np.concatenate((
 		np.concatenate((g11, g12),axis=1),
 		np.concatenate((g21, g22),axis=1),
 		np.concatenate((g31, g32),axis=1)
-		)
-		, axis=0
-	)
+		), axis=0)
 
 	h1 = np.zeros((1,1))
 	h2 = y
@@ -149,8 +146,6 @@ def synRegExperiments():
 def preprocessCCS(dataset_folder):
 	path = os.path.join(dataset_folder, "Concrete_Data.xls")
 
-	print(path)
-
 	df = pd.read_excel(path)
 	
 
@@ -246,16 +241,19 @@ def runCCS(dataset_folder):
 
 # Q2
 
+# find loss at given w
 def linearRegL2Obj(w, X, y):
 	n, d = np.shape(X)
 	obj_val = 1 / (2 * n) * np.linalg.norm(X @ w - y, 2)**2
 	return obj_val
 
+# find gradient of loss at given w
 def linearRegL2Grad(w, X, y):
 	n, d = np.shape(X)
 	gradient = 1 / n * X.T @ (X @ w - y)
 	return gradient
 
+# find optimal w for a convex optimization problem
 def find_opt(obj_func, grad_func, X, y):
 	d = X.shape[1]
 	# TODO: Initialize a random 1-D array of parameters of size d
@@ -267,41 +265,41 @@ def find_opt(obj_func, grad_func, X, y):
 		
 	# TODO: Define a gradient function `gd` that takes a single argument (w)
 	def gd(w):
-		return grad_func(w[:, None], X, y)
+		return grad_func(w[:, None], X, y).flatten() # added flatten()
 	
-	print(np.shape(w_0))
+	# print(np.shape(w_0))
 	return scipy.optimize.minimize(func, w_0, jac=gd)['x'][:, None]
 
+""" TESTING
+# n_points = 5
+# d = 100
+# noise = 0.2
+# w_true = np.random.randn(d + 1, 1)
+
+# X = np.random.randn(n_points, d) # input matrix
+# X = np.concatenate((np.ones((n_points, 1)), X), axis=1) # augment input
+# y = X @ w_true + np.random.randn(n_points, 1) * noise # ground truth label
+
+
+# import autograd.numpy as autogradnp  # Thinly-wrapped numpy
+
+# def tanh(x):                 # Define a function
+# 	return (1.0 - autogradnp.exp((-2 * x))) / (1.0 + autogradnp.exp(-(2 * x)))
+
+# grad_obj = grad(linearRegL2Obj)       # Obtain its gradient function
+#               # Evaluate the gradient at x = 1.0
+# print(grad_obj(w_true, X, y))
+# print((linearRegL2Obj(w_true + 0.00001, X, y) - linearRegL2Obj(w_true, X, y)) / 0.00001)  # Compare to finite differences
+
+
+w = find_opt(linearRegL2Obj, linearRegL2Grad, X, y)
+
+print(w)
 """
-n_points = 5
-d = 100
-noise = 0.2
-w_true = np.random.randn(d + 1, 1)
-
-X = np.random.randn(n_points, d) # input matrix
-X = np.concatenate((np.ones((n_points, 1)), X), axis=1) # augment input
-y = X @ w_true + np.random.randn(n_points, 1) * noise # ground truth label
-
-
-import autograd.numpy as autogradnp  # Thinly-wrapped numpy
-
-def tanh(x):                 # Define a function
-	return (1.0 - autogradnp.exp((-2 * x))) / (1.0 + autogradnp.exp(-(2 * x)))
-
-grad_obj = grad(linearRegL2Obj)       # Obtain its gradient function
-              # Evaluate the gradient at x = 1.0
-print(grad_obj(w_true, X, y))
-print((linearRegL2Obj(w_true + 0.00001, X, y) - linearRegL2Obj(w_true, X, y)) / 0.00001)  # Compare to finite differences
-"""
-
-# w = find_opt(linearRegL2Obj, linearRegL2Grad, X, y)
-
-# print(w)
 
 def logisticRegObj(w, X, y):
 	n, d = np.shape(X)
 	obj_val = 1 / n * (-y.T @ np.log(scipy.special.expit(X @ w)) - (np.ones((n, 1)) - y).T @ np.log(np.ones((n, 1)) - scipy.special.expit(X @ w)))
-	print(obj_val)
 	return obj_val
 
 def logisticRegGrad(w, X, y):
@@ -309,4 +307,70 @@ def logisticRegGrad(w, X, y):
 	gradient = 1 / n * X.T @ (scipy.special.expit(X @ w) - y)
 	return gradient
 
+# returns a 4 × 3 matrix train acc of average training accuracies and 
+# a 4 × 3 matrix test acc of average test accuracies over 100 runs
+def synClsExperiments():
+	def genData(n_points, dim1, dim2):
+		'''
+		This function generate synthetic data
+		'''
+		c0 = np.ones([1, dim1]) # class 0 center
+		c1 = -np.ones([1, dim1]) # class 1 center
+		X0 = np.random.randn(n_points, dim1 + dim2) # class 0 input
+		X0[:, :dim1] += c0
+		X1 = np.random.randn(n_points, dim1 + dim2) # class 1 input
+		X1[:, :dim1] += c1
+		X = np.concatenate((X0, X1), axis=0)
+		X = np.concatenate((np.ones((2 * n_points, 1)), X), axis=1) # augmentation
+		y = np.concatenate([np.zeros([n_points, 1]), np.ones([n_points, 1])], axis=0)
+		return X, y
+		
+	def runClsExp(m=100, dim1=2, dim2=2):
+		'''
+		Run classification experiment with the specified arguments
+		'''
+		n_test = 1000
+		Xtrain, ytrain = genData(m, dim1, dim2)
+		Xtest, ytest = genData(n_test, dim1, dim2)
+		w_logit = find_opt(logisticRegObj, logisticRegGrad, Xtrain, ytrain)
 
+		# TODO: Compute predicted labels of the training points
+		ztrain_hat = Xtrain @ w_logit # let this linear prediction boundary = 0
+		ytrain_hat = (ztrain_hat >= 0).astype(int) # LogReg Slides page 5/18
+		# TODO: Compute the accuarcy of the training set
+		train_acc = 1 - np.average(np.abs(ytrain_hat - ytrain))
+
+		# TODO: Compute predicted labels of the test points
+		ztest_hat = Xtest @ w_logit # let this linear prediction boundary = 0
+		ytest_hat = (ztest_hat >= 0).astype(int) # LogReg Slides page 5/18
+		# TODO: Compute the accuarcy of the test set
+		test_acc = 1 - np.average(np.abs(ytest_hat - ytest))
+		return train_acc, test_acc
+	
+	n_runs = 100
+	train_acc = np.zeros([n_runs, 4, 3])
+	test_acc = np.zeros([n_runs, 4, 3])
+	# TODO: Change the following random seed to one of your student IDs
+	np.random.seed(101318299)
+	for r in range(n_runs):
+		# print("repeat")
+		for i, m in enumerate((10, 50, 100, 200)):
+			train_acc[r, i, 0], test_acc[r, i, 0] = runClsExp(m=m)
+			# print("1", r, i, m)
+		for i, dim1 in enumerate((1, 2, 4, 8)):
+			train_acc[r, i, 1], test_acc[r, i, 1] = runClsExp(dim1=dim1)
+			# print("2", r, i, dim1)
+		for i, dim2 in enumerate((1, 2, 4, 8)):
+			train_acc[r, i, 2], test_acc[r, i, 2] = runClsExp(dim2=dim2)
+			# print("3", r, i, dim2)
+	# TODO: compute the average accuracies over runs
+	accumulator_train_acc = np.zeros((4, 3))
+	accumulator_test_acc = np.zeros((4, 3))
+	for r in range(n_runs):
+		accumulator_train_acc += train_acc[r]
+		accumulator_test_acc += test_acc[r]
+
+	# TODO: return a 4-by-3 training accuracy variable and a 4-by-3 test accuracy variable
+	return accumulator_train_acc / n_runs, accumulator_test_acc / n_runs
+
+print(synClsExperiments())
