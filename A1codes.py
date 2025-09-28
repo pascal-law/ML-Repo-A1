@@ -303,7 +303,7 @@ def linearRegL2Grad(w, X, y):
 def find_opt(obj_func, grad_func, X, y):
 	d = X.shape[1]
 	# TODO: Initialize a random 1-D array of parameters of size d
-	w_0 = np.zeros(d) # changed to 1-D array of zeros for better use in the BCW database
+	w_0 = np.random.randn(d)
 
 	# TODO: Define an objective function `func` that takes a single argument (w)
 	def func(w):
@@ -505,4 +505,4 @@ def runBCW(dataset_folder):
 
 	return np.mean(train_acc), np.mean(test_acc)
 
-# print(runBCW("./toy_data"))
+print(runBCW("./toy_data"))
