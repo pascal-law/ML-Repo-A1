@@ -303,7 +303,7 @@ def linearRegL2Grad(w, X, y):
 def find_opt(obj_func, grad_func, X, y):
 	d = X.shape[1]
 	# TODO: Initialize a random 1-D array of parameters of size d
-	w_0 = np.random.randn(d)
+	w_0 = np.zeros(d) # changed to 1-D array of zeros for better use in the BCW database
 
 	# TODO: Define an objective function `func` that takes a single argument (w)
 	def func(w):
@@ -443,7 +443,7 @@ def preprocessBCW(dataset_folder):
 	
 	y = df.iloc[:, 1].values.reshape(n, -1) # get index 1 column as y
 	y = (y == "M").astype(int) # converting M, B -> 1, 0
-	X = df.iloc[:, 2:].values.reshape(n, -1) # get index 2-31 columns as X
+	X = df.iloc[:, [2,26,27]].values.reshape(n, -1) # gets index [2, 26, 27] columns as X
 	return X, y
 
 # preprocessBCW(os.path.abspath("./toy_data"))
