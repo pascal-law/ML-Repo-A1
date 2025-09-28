@@ -443,7 +443,7 @@ def preprocessBCW(dataset_folder):
 	
 	y = df.iloc[:, 1].values.reshape(n, -1) # get index 1 column as y
 	y = (y == "M").astype(int) # converting M, B -> 1, 0
-	X = df.iloc[:, 2:].values.reshape(n, -1) # get index 2-11 columns as X
+	X = df.iloc[:, 2:].values.reshape(n, -1) # get index 2-31 columns as X
 	return X, y
 
 # preprocessBCW(os.path.abspath("./toy_data"))
